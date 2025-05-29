@@ -1,9 +1,15 @@
 @use "../../index.scss" as *;
 
-.inputWrap {
+.inputWrap,
+.inputWrap_disabled {
   @include flex-center(15px);
 
   justify-content: start;
+}
+
+.inputWrap_disabled {
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 .input {
@@ -27,6 +33,10 @@
     color: $color-cross;
     border: 2px solid $color-cross;
     border-radius: 5px;
+
+    &:hover {
+      scale: 1.1;
+    }
   }
 
   &_text {
