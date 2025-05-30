@@ -1,0 +1,18 @@
+@mixin flex-center($gap) {
+  display: flex;
+  gap: $gap;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-column-start($gap) {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
+
+// @mixin text($size, $height, $weight) {
+//   font-size: $size;
+//   line-height: $height;
+//   font-weight: $weight;
+// }

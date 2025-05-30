@@ -1,20 +1,20 @@
 import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
 import { useNavigate } from 'react-router';
 
-import { Button } from '../components/button/button';
-import { InputCheck } from '../components/input-check/input-check';
-import { Input } from '../components/input/input';
-import { useAppDispatch, useAppSelector } from '../services/store';
-import { form, resetForm, setForm } from '../services/slices/formSlice';
-import { validateForm } from '../utils/validate';
+import { Button } from '../../components/button/button';
+import { InputCheck } from '../../components/input-check/input-check';
+import { Input } from '../../components/input/input';
+import { useAppDispatch, useAppSelector } from '../../services/store';
+import { form, resetForm, setForm } from '../../services/slices/formSlice';
+import { validateForm } from '../../utils/validate';
 
-import styles from './login.module.scss';
+import styles from './login-page.module.scss';
 
 const FIELD_NAMES = {
-  FIRST_PLAYER: 'firstPlayer' as const,
-  SECOND_PLAYER: 'secondPlayer' as const,
-  IS_BOT: 'isBot' as const,
-};
+  FIRST_PLAYER: 'firstPlayer',
+  SECOND_PLAYER: 'secondPlayer',
+  IS_BOT: 'isBot',
+} as const;
 
 type FieldName = (typeof FIELD_NAMES)[keyof typeof FIELD_NAMES];
 

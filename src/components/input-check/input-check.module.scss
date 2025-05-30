@@ -1,5 +1,3 @@
-@use "../../index.scss" as *;
-
 .inputWrap,
 .inputWrap_disabled {
   @include flex-center(15px);
