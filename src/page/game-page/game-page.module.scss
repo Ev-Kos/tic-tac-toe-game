@@ -5,12 +5,8 @@
   justify-content: center;
   width: 100%;
 
-  &_game_board_wrap {
-    @include flex-column-start(25px);
-  }
-
   &_title {
-    margin: 3% 0 0;
+    margin: 0;
     font-size: 24px;
     color: $color-text;
     text-transform: uppercase;
@@ -28,10 +24,24 @@
 
   &_draw {
     color: $color-draw;
+
+    &::after {
+      display: block;
+      visibility: hidden;
+      height: calc(1.5vw + 36px);
+      content: "";
+    }
   }
 
   &_win {
     color: $color-error;
+
+    &::after {
+      display: block;
+      visibility: hidden;
+      height: calc(1.5vw + 36px);
+      content: "";
+    }
   }
 
   &_winner {

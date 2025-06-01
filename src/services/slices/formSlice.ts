@@ -2,11 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit'; // Изменено
 
 import type { RootState } from '../store';
+import { MIN_BOARD_SIZE } from '../../utils/constants';
 
 type TFormState = {
   firstPlayer: string;
   secondPlayer: string;
   isBot: boolean;
+  boardSize: number;
 };
 
 type TInitialState = {
@@ -18,6 +20,7 @@ const initialState: TInitialState = {
     firstPlayer: '',
     secondPlayer: '',
     isBot: false,
+    boardSize: MIN_BOARD_SIZE,
   },
 };
 

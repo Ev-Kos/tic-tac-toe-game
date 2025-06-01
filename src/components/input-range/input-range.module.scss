@@ -1,0 +1,67 @@
+.container {
+  @include flex-column-start(15px);
+}
+
+.input {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  background: $color-grey-light;
+  border-radius: 5px;
+
+  &_label {
+    font-size: 18px;
+    font-weight: 700;
+    color: $color-text;
+    text-transform: uppercase;
+  }
+
+  &_wrap {
+    @include flex-center(15px);
+  }
+
+  &,
+  &::-webkit-slider-runnable-track,
+  &::-webkit-slider-thumb {
+    appearance: none;
+  }
+
+  &,
+  &::-moz-range-track,
+  &::-moz-range-thumb {
+    appearance: none;
+  }
+
+  &::-webkit-slider-runnable-track {
+    height: 5px;
+    border-radius: 5px;
+  }
+
+  &::-moz-range-track {
+    height: 5px;
+    border-radius: 5px;
+  }
+
+  &::-webkit-slider-thumb {
+    width: 15px;
+    height: 15px;
+    margin-top: -5px;
+    background-color: $color-cross;
+    border-radius: 50%;
+  }
+
+  &::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    margin-top: -5px;
+    background-color: $color-cross;
+    border-radius: 50%;
+  }
+
+  &_value {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: $color-text;
+  }
+}

@@ -61,6 +61,7 @@ export default tseslint.config(
       import: importPlugin,
     },
     rules: {
+      'react/display-name': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/consistent-type-imports': 'error',
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],

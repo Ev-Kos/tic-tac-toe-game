@@ -4,6 +4,7 @@ import styles from './game-board.module.scss';
 
 type TGameBoardProps = {
   board: string[];
+  boardSize: number;
   hoverPreview: number | null;
   move: number;
   onCellClick: (index: number) => void;
@@ -12,7 +13,15 @@ type TGameBoardProps = {
 };
 
 export const GameBoard = memo(
-  ({ board, hoverPreview, move, onCellClick, onCellHover, onCellLeave }: TGameBoardProps) => {
+  ({
+    board,
+    boardSize,
+    hoverPreview,
+    move,
+    onCellClick,
+    onCellHover,
+    onCellLeave,
+  }: TGameBoardProps) => {
     const handleKeyDown = useCallback(
       (e: React.KeyboardEvent, index: number) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -23,7 +32,13 @@ export const GameBoard = memo(
     );
 
     return (
-      <div className={styles.game_board}>
+      <div
+        className={styles.game_board}
+        style={{
+          gridTemplateRows: `repeat(${boardSize}, 1fr)`,
+          gridTemplateColumns: `repeat(${boardSize}, 1fr)`,
+        }}
+      >
         {board.map((item, index) => (
           <div
             className={styles.game_board_cell}
@@ -47,5 +62,3 @@ export const GameBoard = memo(
     );
   },
 );
-
-GameBoard.displayName = 'GameBoard';

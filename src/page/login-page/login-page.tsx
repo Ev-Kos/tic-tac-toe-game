@@ -7,6 +7,8 @@ import { Input } from '../../components/input/input';
 import { useAppDispatch, useAppSelector } from '../../services/store';
 import { form, resetForm, setForm } from '../../services/slices/formSlice';
 import { validateForm } from '../../utils/validate';
+import { InputRange } from '../../components/input-range/input-range';
+import { MAX_BOARD_SIZE, MIN_BOARD_SIZE } from '../../utils/constants';
 
 import styles from './login-page.module.scss';
 
@@ -14,6 +16,7 @@ const FIELD_NAMES = {
   FIRST_PLAYER: 'firstPlayer',
   SECOND_PLAYER: 'secondPlayer',
   IS_BOT: 'isBot',
+  BOARD_SIZE: 'boardSize',
 } as const;
 
 type FieldName = (typeof FIELD_NAMES)[keyof typeof FIELD_NAMES];
@@ -33,7 +36,7 @@ export const LoginPage = () => {
 
   const [touched, setTouched] = useState(INITIAL_TOUCHED);
 
-  const { firstPlayer, secondPlayer, isBot } = useAppSelector(form);
+  const { firstPlayer, secondPlayer, isBot, boardSize } = useAppSelector(form);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -52,7 +55,7 @@ export const LoginPage = () => {
 
     if (!isFieldName(name)) return;
 
-    const inputValue = type === 'checkbox' ? checked : value;
+    const inputValue = type === 'checkbox' ? checked : type === 'range' ? Number(value) : value;
 
     dispatch(
       setForm({
@@ -105,6 +108,13 @@ export const LoginPage = () => {
             error={touched.secondPlayer ? errors.secondPlayer : ''}
             onBlur={handleBlur}
             isDisabled={isBot ? true : false}
+          />
+          <InputRange
+            min={MIN_BOARD_SIZE}
+            max={MAX_BOARD_SIZE}
+            value={boardSize}
+            name="boardSize"
+            onChange={onFormChange}
           />
           <InputCheck
             isCheck={isBot}
