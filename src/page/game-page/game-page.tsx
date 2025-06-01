@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { form } from '../../services/slices/formSlice';
 import { useAppSelector } from '../../services/store';
-import { shuffleTwoStrings } from '../../utils/functions';
+import { generateWinConditions, shuffleTwoStrings } from '../../utils/functions';
+import { GameBoard } from '../../components/game-board/game-board';
 
 import styles from './game-page.module.scss';
 
@@ -13,174 +14,114 @@ const GAME_STATUS = {
 } as const;
 
 export const GamePage = () => {
+  const boardSize = 9;
   const [players, setPlayers] = useState<string[]>([]);
   const [move, setMove] = useState(0);
-  const [board, setBoard] = useState(Array(25).fill(''));
+  const [board, setBoard] = useState(Array(boardSize * boardSize).fill(''));
   const [hoverPreview, setHoverPreview] = useState<number | null>(null);
-  const [gameStatus, setGameStatus] = useState(GAME_STATUS.PLAYING);
+  const [gameStatus, setGameStatus] = useState<string>(GAME_STATUS.PLAYING);
   const [winner, setWinner] = useState('');
-
   const { firstPlayer, secondPlayer } = useAppSelector(form);
 
-  console.log(setGameStatus, setWinner);
+  const winConditions = useMemo(() => generateWinConditions(boardSize), []);
+  const isPlaying = useMemo(() => gameStatus === GAME_STATUS.PLAYING, [gameStatus]);
+
   useEffect(() => {
-    const arrPlayers = shuffleTwoStrings(firstPlayer, secondPlayer);
-    setPlayers(arrPlayers);
+    setPlayers(shuffleTwoStrings(firstPlayer, secondPlayer));
+  }, [firstPlayer, secondPlayer]);
+
+  const checkWin = useCallback(
+    (board: string[]) => {
+      for (const condition of winConditions) {
+        const firstSymbol = board[condition[0]];
+        if (!firstSymbol) continue;
+        const isWinningLine =
+          condition.length === boardSize &&
+          condition.every((index) => board[index] === firstSymbol);
+        if (isWinningLine) {
+          setWinner(firstSymbol === 'X' ? players[0] : players[1]);
+          setGameStatus(GAME_STATUS.WIN);
+          return true;
+        }
+      }
+
+      if (!board.includes('')) {
+        setGameStatus(GAME_STATUS.DRAW);
+        return true;
+      }
+      return false;
+    },
+    [winConditions, players],
+  );
+
+  const handleCellClick = useCallback(
+    (index: number) => {
+      if (!isPlaying || board[index] !== '') return;
+      const newBoard = [...board];
+      newBoard[index] = move === 0 ? 'X' : 'O';
+
+      setBoard(newBoard);
+      if (!checkWin(newBoard)) {
+        setMove(move === 0 ? 1 : 0);
+      }
+    },
+    [isPlaying, board, move, checkWin],
+  );
+
+  const handleCellHover = useCallback(
+    (index: number) => {
+      if (!isPlaying || board[index] !== '') return;
+      setHoverPreview(index);
+    },
+    [isPlaying, board],
+  );
+
+  const handleCellLeave = useCallback(() => {
+    setHoverPreview(null);
   }, []);
 
-  const handleCellClick = (index: number) => {
-    if (gameStatus !== GAME_STATUS.PLAYING) return;
-    if (move === 0) {
-      const newBoard = [...board];
-      newBoard[index] = 'X';
-      setMove(1);
-      setBoard(newBoard);
-    } else {
-      const newBoard = [...board];
-      newBoard[index] = 'O';
-      setMove(0);
-      setBoard(newBoard);
-    }
-  };
-
-  const handleCellHover = (index: number) => {
-    if (gameStatus !== GAME_STATUS.PLAYING) return;
-    if (board[index] === '') {
-      setHoverPreview(index);
-    }
-  };
-
-  const handleCellLeave = () => {
-    setHoverPreview(null);
-  };
-
-  // 	function checkWin(board, symbol) {
-  //   const size = 5; // Размер поля
-  //   const winLength = 5; // Количество символов для победы
-
-  //   // Проверка горизонтальных линий
-  //   for (let row = 0; row < size; row++) {
-  //     for (let col = 0; col <= size - winLength; col++) {
-  //       let win = true;
-  //       for (let i = 0; i < winLength; i++) {
-  //         if (board[row * size + col + i] !== symbol) {
-  //           win = false;
-  //           break;
-  //         }
-  //       }
-  //       if (win) return true;
-  //     }
-  //   }
-
-  //   // Проверка вертикальных линий
-  //   for (let col = 0; col < size; col++) {
-  //     for (let row = 0; row <= size - winLength; row++) {
-  //       let win = true;
-  //       for (let i = 0; i < winLength; i++) {
-  //         if (board[(row + i) * size + col] !== symbol) {
-  //           win = false;
-  //           break;
-  //         }
-  //       }
-  //       if (win) return true;
-  //     }
-  //   }
-
-  //   // Проверка диагоналей (сверху-слева вниз-вправо)
-  //   for (let row = 0; row <= size - winLength; row++) {
-  //     for (let col = 0; col <= size - winLength; col++) {
-  //       let win = true;
-  //       for (let i = 0; i < winLength; i++) {
-  //         if (board[(row + i) * size + col + i] !== symbol) {
-  //           win = false;
-  //           break;
-  //         }
-  //       }
-  //       if (win) return true;
-  //     }
-  //   }
-
-  //   // Проверка диагоналей (сверху-справа вниз-влево)
-  //   for (let row = 0; row <= size - winLength; row++) {
-  //     for (let col = winLength - 1; col < size; col++) {
-  //       let win = true;
-  //       for (let i = 0; i < winLength; i++) {
-  //         if (board[(row + i) * size + col - i] !== symbol) {
-  //           win = false;
-  //           break;
-  //         }
-  //       }
-  //       if (win) return true;
-  //     }
-  //   }
-
-  //   return false; // Победа не найдена
-  // }
-
-  return (
-    <section className={styles.gamePage}>
-      <h1 className={styles.gamePage_title}>Крестики - нолики</h1>
-      {gameStatus !== GAME_STATUS.PLAYING ? (
+  const statusMessage = useMemo(() => {
+    if (!isPlaying) {
+      return (
         <>
           {gameStatus === GAME_STATUS.DRAW && <p className={styles.gamePage_draw}>Ничья</p>}
           {gameStatus === GAME_STATUS.WIN && (
             <p className={styles.gamePage_win}>
-              Победил:
-              <span className={styles.gamePage_winner}>{winner}</span>
+              Победил: <span className={styles.gamePage_winner}>{winner}</span>
             </p>
           )}
         </>
-      ) : (
-        <>
-          <div className={styles.gamePage_text_marker_wrap}>
-            <p className={styles.gamePage_text_marker}>
-              Х:
-              <span className={styles.gamePage_player}>{players[0]}</span>
-            </p>
-            <p className={styles.gamePage_text_marker}>
-              0:
-              <span className={styles.gamePage_player}>{players[1]}</span>
-            </p>
-          </div>
-        </>
-      )}
-      <div>
-        <p
-          className={
-            gameStatus === GAME_STATUS.PLAYING ? styles.gamePage_text : styles.gamePage_text_hidden
-          }
-        >
-          Ход игорока:
-          <span className={styles.gamePage_player}>{players[move]}</span>
-        </p>
-        <div className={styles.gamePage_game_board}>
-          {board.map((item, index) => (
-            <div
-              className={styles.gamePage_game_board_cell}
-              onClick={() => handleCellClick(index)}
-              onMouseEnter={() => handleCellHover(index)}
-              onMouseLeave={handleCellLeave}
-              key={index}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  handleCellClick(index);
-                }
-              }}
-              role="button"
-              tabIndex={0}
-              aria-label={`Ячейка ${index + 1}, ${board[index] ? `занята ${board[index]}` : 'пустая'}`}
-            >
-              <>
-                {item === 'X' && <div className={styles.cross}></div>}
-                {item === 'O' && <div className={styles.circle}></div>}
-                {item === '' && hoverPreview === index && (
-                  <div className={move === 0 ? styles.cross : styles.circle}></div>
-                )}
-              </>
-            </div>
-          ))}
+      );
+    }
+    return (
+      <>
+        <div className={styles.gamePage_text_marker_wrap}>
+          <p className={styles.gamePage_text_marker}>
+            Х: <span className={styles.gamePage_player}>{players[0]}</span>
+          </p>
+          <p className={styles.gamePage_text_marker}>
+            0: <span className={styles.gamePage_player}>{players[1]}</span>
+          </p>
         </div>
-      </div>
+        <p className={styles.gamePage_text}>
+          Ход игрока: <span className={styles.gamePage_player}>{players[move]}</span>
+        </p>
+      </>
+    );
+  }, [isPlaying, gameStatus, winner, players, move]);
+
+  return (
+    <section className={styles.gamePage}>
+      <h1 className={styles.gamePage_title}>Крестики - нолики</h1>
+      {statusMessage}
+      <GameBoard
+        board={board}
+        hoverPreview={hoverPreview}
+        move={move}
+        onCellClick={handleCellClick}
+        onCellHover={handleCellHover}
+        onCellLeave={handleCellLeave}
+      />
     </section>
   );
 };

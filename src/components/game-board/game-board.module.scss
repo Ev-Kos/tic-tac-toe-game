@@ -1,0 +1,86 @@
+.game_board {
+  display: grid;
+  grid-template-rows: repeat(9, 1fr);
+  grid-template-columns: repeat(9, 1fr);
+  gap: 2px;
+  width: 90vmin;
+  max-width: 550px;
+  height: 90vmin;
+  max-height: 550px;
+  margin: 20px auto;
+  overflow: hidden;
+  background-color: $color-text;
+  border-radius: 0;
+
+  &_cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5vmin;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: $color-background;
+    transition: background-color 0.3s;
+  }
+}
+
+.cross {
+  position: relative;
+  width: 80%;
+  height: 80%;
+  cursor: pointer;
+  transition: transform 0.3s;
+  animation: fadeInScale 0.4s ease-out forwards;
+
+  &::before,
+  &::after {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    content: "";
+    background-color: $color-cross;
+    border-radius: 3px;
+    transition: all 0.3s;
+  }
+
+  &::before {
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  &::after {
+    transform: translateY(-50%) rotate(-45deg);
+  }
+}
+
+.circle {
+  position: relative;
+  width: 70%;
+  height: 70%;
+  animation: fadeInScale 0.4s ease-out forwards;
+}
+
+.circle::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  content: "";
+  border: 7px solid $color-zero;
+  border-radius: 50%;
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
