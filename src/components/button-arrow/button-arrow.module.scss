@@ -1,0 +1,14 @@
+.button {
+  color: $color-text;
+  cursor: pointer;
+  background-color: inherit;
+  border: none;
+
+  &:hover {
+    color: $color-green;
+  }
+
+  &_right {
+    rotate: 180deg;
+  }
+}

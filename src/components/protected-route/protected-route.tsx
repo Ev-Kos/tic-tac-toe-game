@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 
 import { useAppSelector } from '../../services/store';
 import { form } from '../../services/slices/formSlice';
+import { ROUTES } from '../../utils/constants';
 
 const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   const { firstPlayer, secondPlayer, isBot } = useAppSelector(form);
@@ -17,7 +18,7 @@ const ProtectedRoute = ({ children }: { children: ReactNode }) => {
       (isFirstPlayerFilled && isSecondPlayerFilled) || (isFirstPlayerFilled && isBotGame);
 
     if (!hasAccess) {
-      navigate('/', { replace: true });
+      navigate(ROUTES.LOGIN, { replace: true });
     }
   }, [firstPlayer, secondPlayer, isBot, navigate]);
 

@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../services/store';
 import { form, resetForm, setForm } from '../../services/slices/formSlice';
 import { validateForm } from '../../utils/validate';
 import { InputRange } from '../../components/input-range/input-range';
-import { MAX_BOARD_SIZE, MIN_BOARD_SIZE } from '../../utils/constants';
+import { MAX_BOARD_SIZE, MIN_BOARD_SIZE, ROUTES } from '../../utils/constants';
 
 import styles from './login-page.module.scss';
 
@@ -78,7 +78,7 @@ export const LoginPage = () => {
     setErrors(newErrors);
 
     if (Object.values(newErrors).some((error) => error !== '')) return;
-    navigate('/game');
+    navigate(ROUTES.GAME);
   };
 
   const handleBlur = (e: ChangeEvent<HTMLInputElement>) => {

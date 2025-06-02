@@ -1,0 +1,76 @@
+.game {
+  @include flex-center(0);
+
+  box-sizing: border-box;
+  justify-content: space-between;
+  padding: 5px 10px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px 0 $color-shadow;
+
+  &_date {
+    place-self: flex-start end;
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: $color-text;
+  }
+
+  &_info {
+    @include flex-column-start(15px);
+
+    width: 300px;
+  }
+
+  &_players {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: $color-text;
+  }
+
+  &_separator {
+    padding: 0 6px;
+    font-size: 16px;
+  }
+
+  &_result_win,
+  &_result_draw {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: $color-red;
+  }
+
+  &_result_draw {
+    color: $color-blue;
+  }
+
+  &_board {
+    @include flex-center(15px);
+
+    padding: 7px 0;
+  }
+
+  &_arrow_hidden {
+    pointer-events: none;
+    opacity: 0;
+  }
+}
+
+@media screen and (width <= 1040px) {
+  .game {
+    @include flex-column-start(15px);
+  }
+}
+
+@media screen and (width <= 400px) {
+  .game_board {
+    @include flex-column-start(15px);
+  }
+}
+
+@media screen and (width <= 380px) {
+  .game_info {
+    width: 100%;
+  }
+}

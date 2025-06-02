@@ -1,0 +1,53 @@
+.historyPage {
+  @include flex-column-start(45px);
+
+  align-items: center;
+  width: 100%;
+  padding: 2% 2% 0;
+
+  &_button_back {
+    align-self: flex-start;
+  }
+
+  &_title {
+    margin: 0;
+    font-size: 26px;
+    color: $color-text;
+    text-transform: uppercase;
+    word-spacing: 3px;
+    letter-spacing: 2px;
+  }
+
+  &_empty {
+    @include flex-column-start(45px);
+
+    justify-content: center;
+    height: 70%;
+
+    &_text {
+      margin: 0;
+      font-size: 26px;
+      font-weight: 700;
+      color: $color-text;
+    }
+  }
+
+  &_games {
+    @include flex-column-start(25px);
+
+    box-sizing: border-box;
+    width: 65%;
+    height: 65%;
+    padding: 15px;
+    margin: 0;
+    overflow-y: scroll;
+    cursor: all-scroll;
+    scrollbar-width: none;
+  }
+}
+
+@media screen and (width <= 600px) {
+  .historyPage_games {
+    width: 90%;
+  }
+}

@@ -7,7 +7,7 @@
 
   &_title {
     margin: 0;
-    font-size: 24px;
+    font-size: 26px;
     color: $color-text;
     text-transform: uppercase;
     word-spacing: 3px;
@@ -16,30 +16,30 @@
 
   &_draw,
   &_win {
-    margin: 3px 0;
+    margin: 0;
     font-size: 44px;
     font-weight: 700;
     text-transform: uppercase;
   }
 
   &_draw {
-    color: $color-draw;
+    color: $color-blue;
 
     &::after {
       display: block;
       visibility: hidden;
-      height: calc(1.5vw + 36px);
+      height: calc(2vw + 37px);
       content: "";
     }
   }
 
   &_win {
-    color: $color-error;
+    color: $color-red;
 
     &::after {
       display: block;
       visibility: hidden;
-      height: calc(1.5vw + 36px);
+      height: calc(2vw + 37px);
       content: "";
     }
   }
@@ -70,6 +70,19 @@
   &_player {
     padding-left: 15px;
     font-size: 24px;
-    color: $color-cross;
+    color: $color-green;
+  }
+
+  &_buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 60vmin;
+    max-width: 550px;
+  }
+}
+
+@media screen and (width <= 410px) {
+  .gamePage_buttons {
+    width: 90%;
   }
 }

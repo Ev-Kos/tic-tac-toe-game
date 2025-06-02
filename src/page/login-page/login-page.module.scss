@@ -10,7 +10,7 @@
     justify-content: center;
     width: 35%;
     padding: 3% 2%;
-    border: 2px solid $color-cross;
+    border: 2px solid $color-green;
     border-radius: 30px;
   }
 
@@ -19,14 +19,14 @@
   }
 }
 
-// @media screen and (max-width: 768px) {
-//   .login_form {
-//     width: 75%;
-//   }
-// }
+@media screen and (width <= 768px) {
+  .login_form {
+    width: 75%;
+  }
+}
 
-// @media screen and (max-width: 450px) {
-//   .login_form {
-//     width: 80%;
-//   }
-// }
+@media screen and (width <= 450px) {
+  .login_form {
+    width: 80%;
+  }
+}
