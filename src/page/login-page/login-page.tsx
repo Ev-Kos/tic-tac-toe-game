@@ -121,7 +121,7 @@ export const LoginPage = () => {
             checked={isBot}
             onChange={onFormChange}
             name="isBot"
-            isDisabled={secondPlayer ? true : false}
+            isDisabled={true}
           />
         </div>
         <Button type="submit" disabled={isHasError}>

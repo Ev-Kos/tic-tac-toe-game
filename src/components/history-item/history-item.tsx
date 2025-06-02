@@ -39,10 +39,11 @@ export const HistoryItem = ({ item }: THistoryItemProps) => {
   return (
     <div className={styles.game}>
       <div className={styles.game_info}>
-        <p className={styles.game_players}>
-          {item.players[0]}
-          <span className={styles.game_separator}>vs</span>
-          {item.players[1]}
+        <p className={styles.game_player_wrap}>
+          Х: <span className={styles.game_player}>{item.players[0]}</span>
+        </p>
+        <p className={styles.game_player_wrap}>
+          O: <span className={styles.game_player}>{item.players[1]}</span>
         </p>
         <p className={item.winner ? styles.game_result_win : styles.game_result_draw}>
           {item.winner ? `Победа: ${item.winner}` : 'Ничья'}

@@ -18,19 +18,18 @@
   &_info {
     @include flex-column-start(15px);
 
-    width: 300px;
+    width: 20%;
   }
 
-  &_players {
+  &_player_wrap {
     margin: 0;
     font-size: 24px;
     font-weight: 700;
     color: $color-text;
   }
 
-  &_separator {
-    padding: 0 6px;
-    font-size: 16px;
+  &_player {
+    color: $color-green;
   }
 
   &_result_win,
@@ -60,17 +59,15 @@
 @media screen and (width <= 1040px) {
   .game {
     @include flex-column-start(15px);
+
+    &_info {
+      width: 100%;
+    }
   }
 }
 
 @media screen and (width <= 400px) {
   .game_board {
     @include flex-column-start(15px);
-  }
-}
-
-@media screen and (width <= 380px) {
-  .game_info {
-    width: 100%;
   }
 }
